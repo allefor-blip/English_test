@@ -818,8 +818,16 @@ if len(st.session_state.quiz_data) > 0 and st.session_state.current_question < l
     if auto_play_key not in st.session_state:
         st.session_state[auto_play_key] = True
         speed_text = "느린 속도" if st.session_state.audio_speed == "slow" else "정상 속도"
-        st.write(f"🎵 {speed_text}로 자동 재생")
-        play_audio(question_info["question"], question_info["audio_lang"], slow=(st.session_state.audio_speed == "slow"))
+        st.write(f"🎵 1초 후 {speed_text}로 자동 재생...")
+        
+        # 1초 지연을 위한 placeholder
+        delay_placeholder = st.empty()
+        
+        # 1초 지연 후 재생
+        time.sleep(1)
+        with delay_placeholder.container():
+            st.write(f"🎵 {speed_text}로 재생 중...")
+            play_audio(question_info["question"], question_info["audio_lang"], slow=(st.session_state.audio_speed == "slow"))
     
     # 문제 표시
     st.markdown(f"### 🔊 듣고 답하세요:")
